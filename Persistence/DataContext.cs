@@ -9,5 +9,7 @@ namespace Persistence
         public DataContext(DbContextOptions opts) : base(opts)
         {
         }
+
+        public DbSet<WasteReport> WasteReports { get; set; }
     }
 }

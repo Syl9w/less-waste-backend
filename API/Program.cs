@@ -18,18 +18,9 @@ builder.Services.AddControllers(opt =>
 
     opt.Filters.Add(new AuthorizeFilter(policy));
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(opt =>
-    opt.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnectionString")));
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("CorsPolicy", policy =>
-    {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
-    });
-});
+
+builder.Services.AddApplicationServices(builder.Configuration);
+
 builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
