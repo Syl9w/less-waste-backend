@@ -1,5 +1,7 @@
 using Application.Core;
+using Application.Interfaces;
 using Application.WasteReports;
+using Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -24,6 +26,8 @@ namespace API.Extensions
             });
             services.AddMediatR(typeof(List.Handler));
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUserAccessor, UserAccessor>();
 
             return services;
         }

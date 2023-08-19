@@ -1,10 +1,9 @@
-namespace Domain
+namespace Application.WasteReports
 {
-    public class WasteReport
+    public class WasteReportDto
     {
-        public Guid Id { get; set; }
-        public string AppUserId { get; set; }
-        public AppUser Reporter { get; set; }
+         public Guid Id { get; set; }
+        public ReporterDto ReporterDto { get; set; }
         public DateTime Date { get; set; }
         public float Plastic { get; set; }
         public float Paper { get; set; }

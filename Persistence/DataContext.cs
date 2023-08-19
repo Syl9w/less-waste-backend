@@ -11,5 +11,16 @@ namespace Persistence
         }
 
         public DbSet<WasteReport> WasteReports { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<WasteReport>()
+                .HasOne(p => p.Reporter)
+                .WithMany(b => b.WasteReports)
+                .HasForeignKey(p => p.AppUserId)
+                .IsRequired();
+        }
     }
 }
