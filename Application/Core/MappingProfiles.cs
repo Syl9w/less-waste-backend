@@ -10,7 +10,7 @@ namespace Application.Core
         {
             CreateMap<WasteReport, WasteReport>();
             CreateMap<WasteReport, WasteReportDto>()
-               .ForMember(dest => dest.ReporterDto,
+               .ForMember(dest => dest.Reporter,
                 opt => opt.MapFrom(src => new ReporterDto
                 {
                     UserName = src.Reporter.UserName,

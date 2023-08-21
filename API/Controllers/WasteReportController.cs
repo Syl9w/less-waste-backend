@@ -12,6 +12,12 @@ namespace API.Controllers
             return await Mediator.Send(new List.Query());
         }
 
+        [HttpGet("reports/{username}")]
+        public async Task<ActionResult<List<WasteReportDto>>> GetUsersWasteReports(string username)
+        {
+            return await Mediator.Send(new ListUsersReports.Query{UserName=username});
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<WasteReportDto>> GetWasteReport(Guid id)
         {
