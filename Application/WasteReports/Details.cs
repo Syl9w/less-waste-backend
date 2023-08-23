@@ -1,3 +1,4 @@
+using Application.Core;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,12 +8,12 @@ namespace Application.WasteReports
 {
     public class Details
     {
-        public class Query : IRequest<WasteReportDto>
+        public class Query : IRequest<Result< WasteReportDto>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, WasteReportDto>
+        public class Handler : IRequestHandler<Query, Result<WasteReportDto>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -23,10 +24,11 @@ namespace Application.WasteReports
                 _mapper = mapper;
             }
 
-            public async Task<WasteReportDto> Handle(Query request, CancellationToken token)
+            public async Task<Result<WasteReportDto>> Handle(Query request, CancellationToken token)
             {
                 var report = await _context.WasteReports.Include(wr => wr.Reporter).FirstOrDefaultAsync(wr => wr.Id == request.Id);
-                return _mapper.Map<WasteReportDto>(report);
+                var res = _mapper.Map<WasteReportDto>(report);
+                return Result<WasteReportDto>.Success(res);
             }
         }
     }

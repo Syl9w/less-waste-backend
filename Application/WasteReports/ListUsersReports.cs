@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Application.Core;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +8,12 @@ namespace Application.WasteReports
 {
     public class ListUsersReports
     {
-        public class Query : IRequest<List<WasteReportDto>>
+        public class Query : IRequest<Result<List<WasteReportDto>>>
         {
             public string UserName { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, List<WasteReportDto>>
+        public class Handler : IRequestHandler<Query, Result<List<WasteReportDto>>>
         {
             private readonly IMapper _mapper;
             private readonly DataContext _context;
@@ -27,14 +24,14 @@ namespace Application.WasteReports
 
             }
 
-            public async Task<List<WasteReportDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<WasteReportDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var wasteReports = await _context.WasteReports
                     .Include(wr => wr.Reporter)
                     .Where(wr => wr.Reporter.UserName == request.UserName)
                     .ToListAsync();
 
-                return _mapper.Map<List<WasteReportDto>>(wasteReports);
+                return Result<List<WasteReportDto>>.Success(_mapper.Map<List<WasteReportDto>>(wasteReports));
             }
         }
     }

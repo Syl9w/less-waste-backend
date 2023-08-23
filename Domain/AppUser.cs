@@ -7,5 +7,6 @@ namespace Domain
         public string DisplayName { get; set; }
         public int Age { get; set; }
         public List<WasteReport> WasteReports { get; set; }
+        public List<WasteGoal> WasteGoals { get; set; }
     }
 }

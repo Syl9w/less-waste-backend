@@ -1,3 +1,4 @@
+using Application.Core;
 using Application.Interfaces;
 using Domain;
 using MediatR;
@@ -8,12 +9,12 @@ namespace Application.WasteReports
 {
     public class Create
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public WasteReport WasteReport { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
@@ -23,7 +24,7 @@ namespace Application.WasteReports
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == _userAccessor.GetUserName());
                 var sameDateReport = await _context.WasteReports
@@ -44,9 +45,12 @@ namespace Application.WasteReports
                     _context.WasteReports.Add(request.WasteReport);
                 }
 
-                await _context.SaveChangesAsync(cancellationToken);
+                var res = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                return Unit.Value;
+
+                if (res) return Result<Unit>.Success(Unit.Value);
+
+                return Result<Unit>.Failure("Failed to create a report");
             }
         }
     }
