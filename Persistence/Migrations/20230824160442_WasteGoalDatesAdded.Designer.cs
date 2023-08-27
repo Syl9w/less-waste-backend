@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,9 +11,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230824160442_WasteGoalDatesAdded")]
+    partial class WasteGoalDatesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
@@ -99,19 +102,19 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("ProgressFood")
+                    b.Property<float>("PrgressFood")
                         .HasColumnType("REAL");
 
-                    b.Property<float>("ProgressFuel")
+                    b.Property<float>("PrgressFuel")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("PrgressWater")
                         .HasColumnType("REAL");
 
                     b.Property<float>("ProgressPaper")
                         .HasColumnType("REAL");
 
                     b.Property<float>("ProgressPlastic")
-                        .HasColumnType("REAL");
-
-                    b.Property<float>("ProgressWater")
                         .HasColumnType("REAL");
 
                     b.Property<DateTime>("StartDate")

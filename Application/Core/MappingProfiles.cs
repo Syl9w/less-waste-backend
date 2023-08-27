@@ -1,3 +1,4 @@
+using Application.WasteGoals;
 using Application.WasteReports;
 using AutoMapper;
 using Domain;
@@ -17,6 +18,9 @@ namespace Application.Core
                     DisplayName = src.Reporter.DisplayName,
                     Age = src.Reporter.Age
                 }));
+
+            CreateMap<WasteGoal, WasteGoalDto>();
+
             CreateMap<AppUser, ReporterDto>();
         }
     }

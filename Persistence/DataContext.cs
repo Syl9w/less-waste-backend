@@ -11,6 +11,7 @@ namespace Persistence
         }
 
         public DbSet<WasteReport> WasteReports { get; set; }
+        public DbSet<WasteGoal> WasteGoals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
